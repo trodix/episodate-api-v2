@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="create-series-table" author="svallet">
+        <createTable tableName="series">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints  primaryKey="true"  nullable="false" />
+            </column>
+            <column name="slug" type="varchar">
+                <constraints nullable="false" unique="true" />
+            </column>
+            <column name="name" type="varchar">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-website-table" author="svallet">
+        <createTable tableName="websites">
+            <column  name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="name" type="varchar">
+                <constraints nullable="false" unique="true" />
+            </column>
+            <column name="base_url" type="varchar">
+                <constraints nullable="false" unique="true" />
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-link-table" author="svallet">
+        <createTable tableName="link">
+            <column  name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="serie_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_link_series" references="series(id)" />
+            </column>
+            <column name="website_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_link_websites" references="websites(id)" />
+            </column>
+            <column name="uri_pattern" type="varchar">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="link" columnNames="serie_id, website_id" />
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,21 @@
+server:
+  port: 4080
+
+spring:
+  profiles:
+    active: dev
+
+  logging:
+    file:
+      name: logs/application.log
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    change-log: db/changelog/db.changelog-master.xml
+
+  mybatis:
+    config-location: classpath:db/mybatis/mybatis-config.xml
+    mapper-locations: classpath*:db/mybatis/**/*-mapper.xml
+    type-aliases-package: com.trodix.episodate.**.entities

@@ -1,0 +1,17 @@
+services:
+
+  database:
+    image: postgres:15.3
+    environment:
+      - POSTGRES_PASSWORD=episodate
+      - POSTGRES_USER=episodate
+      - POSTGRES_DB=episodate
+    ports:
+      - 5432:5432
+    volumes:
+      - ./data/postgresql:/var/lib/postgresql
+    networks:
+      - episodate_network
+
+networks:
+  episodate_network:
