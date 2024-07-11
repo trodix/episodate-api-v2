@@ -15,7 +15,7 @@ spring:
   liquibase:
     change-log: db/changelog/db.changelog-master.xml
 
-  mybatis:
-    config-location: classpath:db/mybatis/mybatis-config.xml
-    mapper-locations: classpath*:db/mybatis/**/*-mapper.xml
-    type-aliases-package: com.trodix.episodate.**.entities
+mybatis:
+  config-location: classpath:db/mybatis/mybatis-config.xml
+  mapper-locations: classpath*:db/mybatis/**/*-mapper.xml
+  type-aliases-package: com.trodix.episodate.**.entities
