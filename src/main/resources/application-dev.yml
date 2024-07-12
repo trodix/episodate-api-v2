@@ -3,3 +3,18 @@ spring:
     username: episodate
     password: episodate
     url: jdbc:postgresql://localhost:5432/episodate
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://trodix.local:8080/realms/episodate
+      client:
+        provider:
+          episodate:
+            token-uri: http://trodix.local:8080/realms/episodate/protocol/openid-connect/token
+        registration:
+          episodate-api:
+            authorization-grant-type: client_credentials
+            client-id: episodate-api
+            client-secret: bmL1ZyfZSgiBKEQkKOmjr38PrMPxJeoI

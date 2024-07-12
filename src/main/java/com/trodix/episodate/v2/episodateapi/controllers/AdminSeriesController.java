@@ -10,17 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v2/public/series")
+@RequestMapping("/api/v2/admin/series")
 @RequiredArgsConstructor
-public class SeriesController {
+public class AdminSeriesController {
 
     private final SeriesService serieService;
 
-    @GetMapping
-    public List<SeriesService.SerieData> getSerieData(@RequestParam String serieName, @RequestParam Integer season, @RequestParam Integer episode, @RequestParam(required = false) String episodeName) {
-
-        var data = new SeriesService.SerieDataQuery(serieName, season, episode, episodeName);
-        return serieService.getSerieData(data);
+    @GetMapping("hello")
+    public String hello() {
+        return "World!";
     }
 
 }
