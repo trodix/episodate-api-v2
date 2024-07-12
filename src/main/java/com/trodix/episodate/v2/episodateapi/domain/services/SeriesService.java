@@ -1,6 +1,8 @@
-package com.trodix.episodate.v2.episodateapi.services;
+package com.trodix.episodate.v2.episodateapi.domain.services;
 
+import com.trodix.episodate.v2.episodateapi.persistence.entities.Serie;
 import com.trodix.episodate.v2.episodateapi.persistence.entities.SerieLink;
+import com.trodix.episodate.v2.episodateapi.persistence.mappers.LinkMapper;
 import com.trodix.episodate.v2.episodateapi.persistence.mappers.SerieMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.text.StringSubstitutor;
@@ -19,19 +21,20 @@ import java.util.Map;
 public class SeriesService {
 
     private final SerieMapper serieMapper;
+    private final LinkMapper linkMapper;
 
-    public record SerieDataQuery(String serieName, Integer season, Integer episode, String episodeName) {}
-    public record SerieData(String serieName, String url) {}
+    public record SerieLinkQuery(String serieName, Integer season, Integer episode, String episodeName) {}
+    public record SerieLinkData(String serieName, String url) {}
 
-    public List<SerieData> getSerieData(SerieDataQuery query) {
-        return serieMapper.findLinks(query.serieName).stream().map(link -> toSerieData(query, link)).toList();
+    public List<SerieLinkData> getSerieLinks(SerieLinkQuery query) {
+        return linkMapper.findLinks(query.serieName).stream().map(link -> toSerieLinkData(query, link)).toList();
     }
 
-    public static SerieData toSerieData(SerieDataQuery query, SerieLink link) {
-        return new SerieData(link.getSerieName(), toSerieUrl(link, query));
+    public static SerieLinkData toSerieLinkData(SerieLinkQuery query, SerieLink link) {
+        return new SerieLinkData(link.getSerie().getName(), toSerieUrl(link, query));
     }
 
-    public static String toSerieUrl(SerieLink link, SerieDataQuery query) {
+    public static String toSerieUrl(SerieLink link, SerieLinkQuery query) {
 
         String startDelimiter = "${";
         String endDelimiter = "}";
@@ -48,6 +51,22 @@ public class SeriesService {
         } catch (MalformedURLException e) {
             throw new IllegalArgumentException(MessageFormat.format("Malformed URL: {0}}", serieUrl), e);
         }
+    }
+
+    public List<Serie> getAll() {
+        return serieMapper.findAll();
+    }
+
+    public Serie create(Serie serie) {
+        return serieMapper.insert(serie);
+    }
+
+    public Serie update(Serie serie) {
+        return serieMapper.update(serie);
+    }
+
+    public void delete(Long id) {
+        serieMapper.delete(id);
     }
 
 }

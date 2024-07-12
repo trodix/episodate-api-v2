@@ -3,10 +3,9 @@ package com.trodix.episodate.v2.episodateapi.persistence.entities;
 import lombok.Data;
 
 @Data
-public class SerieLink {
+public class Serie {
 
     private Long id;
-    private String urlPattern;
-    private Serie serie;
+    private String name;
 
 }

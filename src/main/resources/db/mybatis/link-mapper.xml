@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.trodix.episodate.v2.episodateapi.persistence.mappers.LinkMapper">
+
+    <resultMap id="result_SerieLink" type="SerieLink">
+        <result property="id" column="id" />
+        <result property="urlPattern" column="url_pattern" />
+        <association property="serie" javaType="Serie">
+            <id property="id" column="serie_id"  />
+            <result property="name" column="name" />
+        </association>
+    </resultMap>
+
+    <select id="findLinks" resultMap="result_SerieLink">
+        SELECT s.name, l.url_pattern FROM link l
+        INNER JOIN series s ON s.id = l.serie_id
+        WHERE s.name LIKE '%' || #{serieName} || '%'
+    </select>
+
+    <select id="findAll" resultMap="result_SerieLink">
+        SELECT l.id, l.url_pattern, l.serie_id, s.name FROM link l
+        INNER JOIN series s ON s.id = l.serie_id
+    </select>
+
+</mapper>

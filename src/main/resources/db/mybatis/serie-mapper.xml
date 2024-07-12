@@ -4,17 +4,13 @@
 
 <mapper namespace="com.trodix.episodate.v2.episodateapi.persistence.mappers.SerieMapper">
 
-    <resultMap id="result_SerieLink" type="SerieLink">
-        <result property="serieName" column="name" />
-        <result property="season" column="season" />
-        <result property="episode" column="episode" />
-        <result property="urlPattern" column="url_pattern" />
+    <resultMap id="result_Serie" type="Serie">
+        <result property="id" column="id" />
+        <result property="name" column="name" />
     </resultMap>
 
-    <select id="findLinks" resultMap="result_SerieLink">
-        SELECT s.name, l.url_pattern FROM link l
-        INNER JOIN series s ON s.id = l.serie_id
-        WHERE s.name LIKE '%' || #{serieName} || '%'
+    <select id="findAll" resultMap="result_Serie">
+        SELECT id, name FROM series s
     </select>
 
 </mapper>
