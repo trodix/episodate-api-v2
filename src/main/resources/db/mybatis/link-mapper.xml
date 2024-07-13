@@ -14,14 +14,26 @@
     </resultMap>
 
     <select id="findLinks" resultMap="result_SerieLink">
-        SELECT s.name, l.url_pattern FROM link l
+        SELECT s.name, l.url_pattern FROM links l
         INNER JOIN series s ON s.id = l.serie_id
         WHERE s.name LIKE '%' || #{serieName} || '%'
     </select>
 
     <select id="findAll" resultMap="result_SerieLink">
-        SELECT l.id, l.url_pattern, l.serie_id, s.name FROM link l
+        SELECT l.id, l.url_pattern, l.serie_id, s.name FROM links l
         INNER JOIN series s ON s.id = l.serie_id
     </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO links (serie_id, url_pattern) VALUES (#{serieId}, #{urlPattern}) RETURNING id
+    </insert>
+
+    <update id="update">
+        UPDATE links SET serie_id = #{serieId}, url_pattern = #{urlPattern} WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM links WHERE id = #{id}
+    </delete>
 
 </mapper>

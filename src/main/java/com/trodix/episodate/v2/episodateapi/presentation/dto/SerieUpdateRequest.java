@@ -11,6 +11,6 @@ public class SerieUpdateRequest {
     private Integer id;
 
     @NotEmpty
-    private String serieName;
+    private String name;
 
 }

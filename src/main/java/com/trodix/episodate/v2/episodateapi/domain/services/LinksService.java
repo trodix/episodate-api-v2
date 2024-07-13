@@ -19,11 +19,12 @@ public class LinksService {
     }
 
     public Link create(Link link) {
-        return linkMapper.insert(link);
+        linkMapper.insert(link);
+        return link;
     }
 
-    public Link update(Link link) {
-        return linkMapper.update(link);
+    public void update(Link link) {
+        linkMapper.update(link);
     }
 
     public void delete(Long id) {

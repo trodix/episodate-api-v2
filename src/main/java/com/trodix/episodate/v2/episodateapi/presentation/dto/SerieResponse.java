@@ -1,12 +1,11 @@
 package com.trodix.episodate.v2.episodateapi.presentation.dto;
 
-import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
-public class SerieCreateRequest {
+public class SerieResponse {
 
-    @NotEmpty
+    private Long id;
     private String name;
 
 }

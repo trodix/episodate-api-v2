@@ -16,7 +16,7 @@
     </changeSet>
 
     <changeSet id="create-link-table" author="svallet">
-        <createTable tableName="link">
+        <createTable tableName="links">
             <column  name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" />
             </column>
@@ -27,7 +27,6 @@
                 <constraints nullable="false" unique="true" />
             </column>
         </createTable>
-        <addUniqueConstraint tableName="link" columnNames="serie_id, url_pattern" />
     </changeSet>
 
 </databaseChangeLog>

@@ -13,9 +13,9 @@ public interface LinkMapper {
 
      List<SerieLink> findAll();
 
-     Link insert(Link link);
+     Long insert(Link link);
 
-     Link update(Link link);
+     void update(Link link);
 
      void delete(Long id);
 

@@ -58,11 +58,12 @@ public class SeriesService {
     }
 
     public Serie create(Serie serie) {
-        return serieMapper.insert(serie);
+        serieMapper.insert(serie);
+        return serie;
     }
 
-    public Serie update(Serie serie) {
-        return serieMapper.update(serie);
+    public void update(Serie serie) {
+        serieMapper.update(serie);
     }
 
     public void delete(Long id) {
