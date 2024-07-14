@@ -2,6 +2,7 @@ package com.trodix.episodate.v2.episodateapi.presentation.controllers;
 
 import com.trodix.episodate.v2.episodateapi.domain.services.SeriesService;
 import com.trodix.episodate.v2.episodateapi.presentation.dto.SerieLinkDataResponse;
+import com.trodix.episodate.v2.episodateapi.presentation.dto.SerieResponse;
 import com.trodix.episodate.v2.episodateapi.presentation.mappers.SerieMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,14 +17,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SeriesController {
 
-    private final SeriesService serieService;
+    private final SeriesService seriesService;
     private final SerieMapper serieMapper;
 
     @GetMapping
+    public List<SerieResponse> getAll() {
+        return serieMapper.toDto2(seriesService.getAll());
+    }
+
+    @GetMapping("search")
     public List<SerieLinkDataResponse> getSerieData(@RequestParam String serieName, @RequestParam Integer season, @RequestParam Integer episode, @RequestParam(required = false) String episodeName) {
 
         var data = new SeriesService.SerieLinkQuery(serieName, season, episode, episodeName);
-        return serieMapper.toDto(serieService.getSerieLinks(data));
+        return serieMapper.toDto(seriesService.getSerieLinks(data));
     }
 
 }

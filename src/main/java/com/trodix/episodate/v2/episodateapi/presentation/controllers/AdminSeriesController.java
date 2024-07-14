@@ -21,11 +21,6 @@ public class AdminSeriesController {
     private final SerieMapper serieMapper;
     private final SeriesService seriesService;
 
-    @GetMapping
-    public List<SerieResponse> getAll() {
-        return serieMapper.toDto2(seriesService.getAll());
-    }
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public SerieResponse createSerie(@Valid @RequestBody SerieCreateRequest serie) {

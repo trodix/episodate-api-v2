@@ -18,3 +18,7 @@ spring:
             authorization-grant-type: client_credentials
             client-id: episodate-api
             client-secret: bmL1ZyfZSgiBKEQkKOmjr38PrMPxJeoI
+
+cors:
+  allowed-origins:
+    - "http://localhost:4200"

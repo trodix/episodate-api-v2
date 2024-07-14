@@ -2,6 +2,7 @@ package com.trodix.episodate.v2.episodateapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 @SpringBootApplication
 public class EpisodateApiV2Application {
