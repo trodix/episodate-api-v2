@@ -1,9 +1,12 @@
 package com.trodix.episodate.episodateapi.domain.services;
 
-import com.trodix.episodate.episodateapi.persistence.entities.SerieLink;
-import com.trodix.episodate.episodateapi.persistence.mappers.SerieMapper;
 import com.trodix.episodate.episodateapi.persistence.entities.Serie;
+import com.trodix.episodate.episodateapi.persistence.entities.SerieLink;
 import com.trodix.episodate.episodateapi.persistence.mappers.LinkMapper;
+import com.trodix.episodate.episodateapi.persistence.mappers.SerieMapper;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.text.StringSubstitutor;
 import org.springframework.stereotype.Service;
@@ -12,6 +15,7 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,14 +28,25 @@ public class SeriesService {
     private final LinkMapper linkMapper;
 
     public record SerieLinkQuery(String serieName, Integer season, Integer episode, String episodeName) {}
-    public record SerieLinkData(String serieName, String url) {}
 
-    public List<SerieLinkData> getSerieLinks(SerieLinkQuery query) {
-        return linkMapper.findLinks(query.serieName).stream().map(link -> toSerieLinkData(query, link)).toList();
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Data
+    public static class SerieLinkData {
+        private String serieName;
+        private List<String> urls = new ArrayList<>();
     }
 
-    public static SerieLinkData toSerieLinkData(SerieLinkQuery query, SerieLink link) {
-        return new SerieLinkData(link.getSerie().getName(), toSerieUrl(link, query));
+    public SerieLinkData getSerieLinks(SerieLinkQuery query) {
+        SerieLinkData data = new SerieLinkData();
+        List<SerieLink> result = linkMapper.findLinks(query.serieName);
+
+        for (SerieLink link : result) {
+            data.setSerieName(link.getSerie().getName());
+            data.getUrls().add(toSerieUrl(link, query));
+        }
+
+        return data;
     }
 
     public static String toSerieUrl(SerieLink link, SerieLinkQuery query) {
@@ -55,6 +70,10 @@ public class SeriesService {
 
     public List<Serie> getAll() {
         return serieMapper.findAll();
+    }
+
+    public Serie getOne(Long id) {
+        return serieMapper.findById(id);
     }
 
     public Serie create(Serie serie) {

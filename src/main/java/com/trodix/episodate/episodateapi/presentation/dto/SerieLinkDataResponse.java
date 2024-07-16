@@ -1,3 +1,12 @@
 package com.trodix.episodate.episodateapi.presentation.dto;
 
-public record SerieLinkDataResponse(String serieName, String url) {}
+import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+public class SerieLinkDataResponse {
+    private String serieName;
+    private List<String> urls = new ArrayList<>();
+}

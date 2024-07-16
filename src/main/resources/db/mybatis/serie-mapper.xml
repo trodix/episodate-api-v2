@@ -5,12 +5,24 @@
 <mapper namespace="com.trodix.episodate.episodateapi.persistence.mappers.SerieMapper">
 
     <resultMap id="result_Serie" type="Serie">
-        <result property="id" column="id" />
-        <result property="name" column="name" />
+        <result property="id" column="s_id" />
+        <result property="name" column="s_name" />
+        <association property="linkPatterns" resultMap="result_LinkPattern" />
+    </resultMap>
+
+    <resultMap id="result_LinkPattern" type="LinkRepresentation">
+        <result property="id" column="l_id" />
+        <result property="urlPattern" column="l_url_pattern" />
     </resultMap>
 
     <select id="findAll" resultMap="result_Serie">
-        SELECT id, name FROM series s
+        SELECT s.id as s_id, s.name as s_name, l.id as l_id, l.url_pattern as l_url_pattern
+        FROM series s left join links l ON l.serie_id = s.id ORDER BY s.name
+    </select>
+
+    <select id="findById" resultMap="result_Serie">
+        SELECT s.id as s_id, s.name as s_name, l.id as l_id, l.url_pattern as l_url_pattern
+        FROM series s left join links l ON l.serie_id = s.id WHERE s.id = #{id}
     </select>
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" keyColumn="id">

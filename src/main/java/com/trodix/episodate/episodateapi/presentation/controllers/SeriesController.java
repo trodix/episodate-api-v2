@@ -5,10 +5,7 @@ import com.trodix.episodate.episodateapi.presentation.dto.SerieLinkDataResponse;
 import com.trodix.episodate.episodateapi.presentation.dto.SerieResponse;
 import com.trodix.episodate.episodateapi.presentation.mappers.SerieMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,11 +22,17 @@ public class SeriesController {
         return serieMapper.toDto2(seriesService.getAll());
     }
 
+    @GetMapping("{id}")
+    public SerieResponse getOne(@PathVariable Long id) {
+        return serieMapper.toDto(seriesService.getOne(id));
+    }
+
     @GetMapping("search")
-    public List<SerieLinkDataResponse> getSerieData(@RequestParam String serieName, @RequestParam Integer season, @RequestParam Integer episode, @RequestParam(required = false) String episodeName) {
+    public SerieLinkDataResponse getSerieData(@RequestParam String serieName, @RequestParam Integer season, @RequestParam Integer episode, @RequestParam(required = false) String episodeName) {
 
         var data = new SeriesService.SerieLinkQuery(serieName, season, episode, episodeName);
-        return serieMapper.toDto(seriesService.getSerieLinks(data));
+        SeriesService.SerieLinkData res = seriesService.getSerieLinks(data);
+        return serieMapper.toDto(res);
     }
 
 }

@@ -10,6 +10,8 @@ public interface SerieMapper {
 
     List<Serie> findAll();
 
+    Serie findById(Long id);
+
     Long insert(Serie serie);
 
     void update(Serie serie);
