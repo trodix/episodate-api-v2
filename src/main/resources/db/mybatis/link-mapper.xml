@@ -2,7 +2,7 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.trodix.episodate.v2.episodateapi.persistence.mappers.LinkMapper">
+<mapper namespace="com.trodix.episodate.episodateapi.persistence.mappers.LinkMapper">
 
     <resultMap id="result_SerieLink" type="SerieLink">
         <result property="id" column="id" />
