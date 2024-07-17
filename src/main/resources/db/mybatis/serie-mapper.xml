@@ -34,7 +34,10 @@
     </update>
 
     <delete id="delete">
-        DELETE FROM series WHERE id = #{id}
+        BEGIN TRANSACTION;
+            DELETE FROM links WHERE serie_id = #{id};
+            DELETE FROM series WHERE id = #{id};
+        COMMIT;
     </delete>
 
 </mapper>
