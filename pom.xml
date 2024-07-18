@@ -12,7 +12,7 @@
 
     <groupId>com.trodix.episodate.v2</groupId>
     <artifactId>episodate-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
 
     <name>episodate-api-v2</name>
     <description>episodate-api-v2</description>
