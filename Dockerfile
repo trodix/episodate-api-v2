@@ -1,10 +1,19 @@
-FROM eclipse-temurin:17-alpine as build
+FROM eclipse-temurin:17-jdk-focal AS build
 
-RUN addgroup -S spring && adduser -S spring -G spring
+ARG DIR=/app
+ENV DIR=${DIR}
+
+RUN mkdir ${DIR}
+WORKDIR ${DIR}
+
 ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
+COPY ${JAR_FILE} ${DIR}/app.jar
 
-FROM eclipse-temurin:17-alpine as run
+FROM build AS run
+
+RUN addgroup spring
+RUN useradd -g spring spring
+RUN chown -R spring:spring $DIR
 
 USER spring:spring
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
