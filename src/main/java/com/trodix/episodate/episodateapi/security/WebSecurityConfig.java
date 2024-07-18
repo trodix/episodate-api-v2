@@ -54,7 +54,8 @@ public class WebSecurityConfig {
 
         @Bean
         public CorsConfigurationSource corsConfigurationSource(CorsProperties corsProperties) {
-                log.info("Registering CORS configuration with allowed origins {}", corsProperties.getAllowedOrigins());
+                log.info("Registering CORS configuration with allowed {} origins: {}",
+                        corsProperties.getAllowedOrigins().length, String.join(",", corsProperties.getAllowedOrigins()));
 
                 final CorsConfiguration configuration = new CorsConfiguration();
                 configuration.setAllowedOrigins(Arrays.asList(corsProperties.getAllowedOrigins()));
